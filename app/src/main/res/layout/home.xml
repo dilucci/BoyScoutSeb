@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:text="Kamera"
         android:id="@+id/buttonKamera"
-        android:layout_alignBottom="@+id/buttonVejret"
+        android:layout_alignTop="@+id/buttonVejret"
         android:layout_alignStart="@+id/buttonKompas" />
 
     <TextView
