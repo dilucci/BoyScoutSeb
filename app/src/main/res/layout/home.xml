@@ -37,16 +37,16 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kompas"
-        android:id="@+id/buttonKompas"
+        android:text="Compass"
+        android:id="@+id/buttonCompass"
         android:layout_alignBottom="@+id/buttonAlarm"
         android:layout_alignStart="@+id/buttonMorse" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vejret"
-        android:id="@+id/buttonVejret"
+        android:text="Weather"
+        android:id="@+id/buttonWeather"
         android:layout_marginTop="52dp"
         android:layout_below="@+id/buttonAlarm"
         android:layout_alignStart="@+id/buttonAlarm" />
@@ -54,18 +54,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kamera"
-        android:id="@+id/buttonKamera"
-        android:layout_alignTop="@+id/buttonVejret"
-        android:layout_alignStart="@+id/buttonKompas" />
+        android:text="Camera"
+        android:id="@+id/buttonCamera"
+        android:layout_alignTop="@+id/buttonWeather"
+        android:layout_alignStart="@+id/buttonCompass" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Overskrift"
+        android:text="BoyScout-app"
         android:id="@+id/textView"
+        android:layout_marginTop="24dp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/buttonGPS"
-        android:layout_marginTop="23dp" />
+        android:layout_toEndOf="@+id/buttonGPS" />
 </RelativeLayout>

@@ -2,19 +2,54 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.emilovich.boyscout" >
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".HomeActivity"
+            android:name=".Activities.HomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.AlarmActivity"
+            android:label="@string/title_activity_alarm" >
+        </activity>
+        <activity
+            android:name=".Activities.CompassActivity"
+            android:label="@string/title_activity_compass" >
+        </activity>
+        <activity
+            android:name=".Activities.MorseActivity"
+            android:label="@string/title_activity_morse" >
+        </activity>
+        <activity
+            android:name=".Activities.WeatherActivity"
+            android:label="@string/title_activity_weather" >
+        </activity>
+        <activity
+            android:name=".Activities.GPSActivity"
+            android:label="@string/title_activity_gps" >
+        </activity>
+        <activity
+            android:name=".Activities.AlarmSettingsActivity"
+            android:label="@string/title_activity_alarm_settings" >
+        </activity>
+        <activity
+            android:name=".Activities.MorseCodesActivity"
+            android:label="@string/title_activity_morse_codes" >
+        </activity>
+        <activity
+            android:name=".Activities.CameraActivity"
+            android:label="@string/title_activity_camera" >
         </activity>
     </application>
 
