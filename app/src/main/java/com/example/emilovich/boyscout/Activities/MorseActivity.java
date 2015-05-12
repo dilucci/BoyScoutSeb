@@ -7,15 +7,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.emilovich.boyscout.Entities.MorseCode;
 import com.example.emilovich.boyscout.R;
+
+import java.util.ArrayList;
 
 
 public class MorseActivity extends ActionBarActivity {
@@ -29,8 +33,20 @@ public class MorseActivity extends ActionBarActivity {
     private boolean isFlashlightOn;
     private Camera camera;
     private Parameters params;
+    private Handler morseHandler;
+    private ArrayList<String> sequence;
 
     private MorseCode morseCodes;
+
+    //making a runnable to delay lights
+    private Runnable morseRunnable = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +57,9 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     private void initUI() {
+        morseHandler = new Handler();
         morseCodes = new MorseCode();
+        sequence = new ArrayList<>();
         context = getApplicationContext();
         buttonMorseSOS = (Button) findViewById(R.id.buttonMorseSOS);
         buttonMorseHelp = (Button) findViewById(R.id.buttonMorseHelp);
@@ -58,17 +76,24 @@ public class MorseActivity extends ActionBarActivity {
         });
 
         buttonMorseSOS.setOnClickListener(new View.OnClickListener() {
-            String[] sequence;
             @Override
             public void onClick(View v) {
                 sequence = morseCodes.getMorseSequence("SOS");
+                Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
+                        Toast.LENGTH_LONG).show();
+                //morseSequence(sequence);
+                morseHandler.post(morseRunnable);//Message will be delivered in 0.5 second.
             }
         });
 
         buttonMorseHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                sequence = morseCodes.getMorseSequence("HELP");
+                Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
+                        Toast.LENGTH_LONG).show();
+                //morseSequence(sequence);
+                morseHandler.post(morseRunnable);//Message will be delivered in 0.5 second.
             }
         });
 
@@ -95,6 +120,42 @@ public class MorseActivity extends ActionBarActivity {
             }
         });
     }
+
+    private void morseSequence(ArrayList<String> morseSequence){
+        String letterSeq = "";
+        char letter;
+        for (int i = 0; i < morseSequence.size(); i++){
+            letterSeq = morseSequence.get(i);
+            for (int k = 0; k < letterSeq.length(); k++){
+                letter = letterSeq.charAt(k);
+                if(letter == '.'){
+                    flashlightOn();
+                    morseHandler.postDelayed(morseRunnable, 250);//Message will be delivered in 0.5 second.
+                    try {
+                        Thread.sleep(250);
+                        flashlightOff();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(letter == '-'){
+                    flashlightOn();
+                    //morseHandler.postDelayed(morseRunnable, 1500);//Message will be delivered in 1 second.
+                    try {
+                        Thread.sleep(1000);
+                        flashlightOff();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(letter == '|'){
+                    //short gap
+                }
+                //shorter gap
+            }
+        }
+    }
+
     //check if phone has flashlight and sets up camera
     private void setUpCamera(){
         hasFlash = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
@@ -106,14 +167,14 @@ public class MorseActivity extends ActionBarActivity {
         params.setFlashMode(Parameters.FLASH_MODE_TORCH);
         camera.setParameters(params);
         camera.startPreview();
-        isFlashlightOn = true;
+        //isFlashlightOn = true;
     }
 
     private void flashlightOff(){
         params.setFlashMode(Parameters.FLASH_MODE_OFF);
         camera.setParameters(params);
         camera.stopPreview();
-        isFlashlightOn = false;
+        //isFlashlightOn = false;
     }
 
 
@@ -135,7 +196,6 @@ public class MorseActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
