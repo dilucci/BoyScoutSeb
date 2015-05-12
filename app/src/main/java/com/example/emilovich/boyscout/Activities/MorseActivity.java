@@ -14,9 +14,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.emilovich.boyscout.Entities.MorseCode;
+import com.example.emilovich.boyscout.Entities.MorseHandler;
 import com.example.emilovich.boyscout.R;
 
 import java.util.ArrayList;
@@ -27,26 +29,12 @@ public class MorseActivity extends ActionBarActivity {
     private Button buttonMorseHelp;
     private Button buttonMorse;
     private Button buttonMorseCodes;
+    private EditText morseText;
     private Context context;
-
-    private boolean hasFlash;
-    private boolean isFlashlightOn;
-    private Camera camera;
-    private Parameters params;
-    private Handler morseHandler;
     private ArrayList<String> sequence;
 
+    private boolean hasFlash;
     private MorseCode morseCodes;
-
-    //making a runnable to delay lights
-    private Runnable morseRunnable = new Runnable()
-    {
-        @Override
-        public void run()
-        {
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +45,16 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     private void initUI() {
-        morseHandler = new Handler();
+        hasFlash = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         morseCodes = new MorseCode();
         sequence = new ArrayList<>();
         context = getApplicationContext();
+        morseText = (EditText) findViewById(R.id.morseText);
         buttonMorseSOS = (Button) findViewById(R.id.buttonMorseSOS);
         buttonMorseHelp = (Button) findViewById(R.id.buttonMorseHelp);
         buttonMorse = (Button) findViewById(R.id.buttonMorse);
         buttonMorseCodes = (Button) findViewById(R.id.buttonMorseCodes);
-        setUpCamera();
+        //setUpCamera();
 
         buttonMorseCodes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,37 +64,16 @@ public class MorseActivity extends ActionBarActivity {
             }
         });
 
+        //Morse SOS
         buttonMorseSOS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sequence = morseCodes.getMorseSequence("SOS");
-                Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
-                        Toast.LENGTH_LONG).show();
-                //morseSequence(sequence);
-                morseHandler.post(morseRunnable);//Message will be delivered in 0.5 second.
-            }
-        });
-
-        buttonMorseHelp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sequence = morseCodes.getMorseSequence("HELP");
-                Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
-                        Toast.LENGTH_LONG).show();
-                //morseSequence(sequence);
-                morseHandler.post(morseRunnable);//Message will be delivered in 0.5 second.
-            }
-        });
-
-        buttonMorse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 if (hasFlash){
-                    if (isFlashlightOn){
-                        flashlightOff();
-                    }else{
-                        flashlightOn();
-                    }
+                    sequence = morseCodes.getMorseSequence("SOS");
+                    Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
+                            Toast.LENGTH_LONG).show();
+                    Thread thread = new Thread(new MorseHandler(sequence));
+                    thread.start();
                 }else{
                     AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
                     alert.setTitle("No flashlight!");
@@ -119,62 +87,52 @@ public class MorseActivity extends ActionBarActivity {
                 }
             }
         });
-    }
 
-    private void morseSequence(ArrayList<String> morseSequence){
-        String letterSeq = "";
-        char letter;
-        for (int i = 0; i < morseSequence.size(); i++){
-            letterSeq = morseSequence.get(i);
-            for (int k = 0; k < letterSeq.length(); k++){
-                letter = letterSeq.charAt(k);
-                if(letter == '.'){
-                    flashlightOn();
-                    morseHandler.postDelayed(morseRunnable, 250);//Message will be delivered in 0.5 second.
-                    try {
-                        Thread.sleep(250);
-                        flashlightOff();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        //Morse Help
+        buttonMorseHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (hasFlash){
+                    sequence = morseCodes.getMorseSequence("HELP");
+                    Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
+                            Toast.LENGTH_LONG).show();
+                    Thread thread = new Thread(new MorseHandler(sequence));
+                    thread.start();
+                }else{
+                    AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
+                    alert.setTitle("No flashlight!");
+                    alert.setMessage("Your device does not support this feature!");
+                    alert.setButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    alert.show();
                 }
-                if(letter == '-'){
-                    flashlightOn();
-                    //morseHandler.postDelayed(morseRunnable, 1500);//Message will be delivered in 1 second.
-                    try {
-                        Thread.sleep(1000);
-                        flashlightOff();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if(letter == '|'){
-                    //short gap
-                }
-                //shorter gap
             }
-        }
-    }
+        });
 
-    //check if phone has flashlight and sets up camera
-    private void setUpCamera(){
-        hasFlash = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-        camera = Camera.open();
-        params = camera.getParameters();
-    }
-
-    private void flashlightOn(){
-        params.setFlashMode(Parameters.FLASH_MODE_TORCH);
-        camera.setParameters(params);
-        camera.startPreview();
-        //isFlashlightOn = true;
-    }
-
-    private void flashlightOff(){
-        params.setFlashMode(Parameters.FLASH_MODE_OFF);
-        camera.setParameters(params);
-        camera.stopPreview();
-        //isFlashlightOn = false;
+        //Morse customer-text
+        buttonMorse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (hasFlash){
+                    sequence = morseCodes.getMorseSequence(morseText.getText().toString());
+                    Thread thread = new Thread(new MorseHandler(sequence));
+                    thread.start();
+                }else{
+                    AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
+                    alert.setTitle("No flashlight!");
+                    alert.setMessage("Your device does not support this feature!");
+                    alert.setButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    alert.show();
+                }
+            }
+        });
     }
 
 
@@ -197,20 +155,5 @@ public class MorseActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        flashlightOff();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (camera != null) {
-            camera.release();
-            camera = null;
-        }
     }
 }
