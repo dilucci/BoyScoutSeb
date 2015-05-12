@@ -29,6 +29,14 @@ public class MorseHandler implements Runnable {
         params = camera.getParameters();
     }
 
+    private void releaseCamera() {
+        if (camera != null) {
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+        }
+    }
+
     private void flashlightOn(){
         params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         camera.setParameters(params);
@@ -86,5 +94,6 @@ public class MorseHandler implements Runnable {
             }
         }
         Thread.currentThread().interrupt();
+        releaseCamera();
     }
 }
