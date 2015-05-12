@@ -14,11 +14,12 @@ public class MorseHandler implements Runnable {
 
     private Camera camera;
     private Camera.Parameters params;
-    private Context context;
     private ArrayList<String> sequence = new ArrayList<>();
 
     public MorseHandler(ArrayList<String> morseSequence){
-        setUpCamera();
+        if (camera == null || params == null) {
+            setUpCamera();
+        }
         this.sequence = morseSequence;
     }
 
@@ -67,17 +68,23 @@ public class MorseHandler implements Runnable {
                 }
                 if(letter == '|'){
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(2000); // Mellemrum!
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-                try {
-                    Thread.sleep(400);
+                    try {
+                    Thread.sleep(400); // Efter hvert blink!
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+            try {
+                Thread.sleep(1000); // Efter hvert bogstav!
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+        Thread.currentThread().interrupt();
     }
 }

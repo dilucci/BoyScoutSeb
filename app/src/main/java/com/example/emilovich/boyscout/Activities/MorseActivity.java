@@ -45,10 +45,11 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     private void initUI() {
-        hasFlash = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+
         morseCodes = new MorseCode();
         sequence = new ArrayList<>();
         context = getApplicationContext();
+        hasFlash = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         morseText = (EditText) findViewById(R.id.morseText);
         buttonMorseSOS = (Button) findViewById(R.id.buttonMorseSOS);
         buttonMorseHelp = (Button) findViewById(R.id.buttonMorseHelp);
@@ -109,6 +110,7 @@ public class MorseActivity extends ActionBarActivity {
                     });
                     alert.show();
                 }
+
             }
         });
 
