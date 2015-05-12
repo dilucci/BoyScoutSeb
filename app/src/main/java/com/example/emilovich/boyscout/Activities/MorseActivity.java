@@ -144,7 +144,7 @@ public class MorseActivity extends ActionBarActivity {
         alert.setMessage("Transmitting morse message: " + message);
         alert.setButton("Stop", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                morseHandler.stopThread();
+                morseHandler.lastwink();
                 finish();
             }
         });
