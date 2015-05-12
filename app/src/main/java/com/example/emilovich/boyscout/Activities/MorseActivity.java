@@ -138,7 +138,7 @@ public class MorseActivity extends ActionBarActivity {
         });
     }
 
-    private void transmitAlert(String message, final MorseHandler morseHandler) {
+   /* private void transmitAlert(String message, final MorseHandler morseHandler) {
         AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
         alert.setTitle("Transmitting...");
         alert.setMessage("Transmitting morse message: " + message);
@@ -149,6 +149,25 @@ public class MorseActivity extends ActionBarActivity {
             }
         });
         alert.show();
+    }*/
+
+    private void transmitAlert(String message, final MorseHandler morseHandler){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MorseActivity.this);
+        builder.setTitle("Transmitting...");
+        builder.setMessage("Transmitting morse message: " + message);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton("STOP", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                morseHandler.lastwink();
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
