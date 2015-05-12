@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
-import android.hardware.Camera.Parameters;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -45,7 +42,6 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     private void initUI() {
-
         morseCodes = new MorseCode();
         sequence = new ArrayList<>();
         context = getApplicationContext();
@@ -73,8 +69,10 @@ public class MorseActivity extends ActionBarActivity {
                     sequence = morseCodes.getMorseSequence("SOS");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
-                    Thread thread = new Thread(new MorseHandler(sequence));
+                    MorseHandler morseHandler = new MorseHandler(sequence);
+                    Thread thread = new Thread(morseHandler);
                     thread.start();
+                    transmitAlert("SOS", morseHandler);
                 }else{
                     AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
                     alert.setTitle("No flashlight!");
@@ -97,8 +95,10 @@ public class MorseActivity extends ActionBarActivity {
                     sequence = morseCodes.getMorseSequence("HELP");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
-                    Thread thread = new Thread(new MorseHandler(sequence));
+                    MorseHandler morseHandler = new MorseHandler(sequence);
+                    Thread thread = new Thread(morseHandler);
                     thread.start();
+                    transmitAlert("HELP", morseHandler);
                 }else{
                     AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
                     alert.setTitle("No flashlight!");
@@ -110,7 +110,6 @@ public class MorseActivity extends ActionBarActivity {
                     });
                     alert.show();
                 }
-
             }
         });
 
@@ -120,8 +119,10 @@ public class MorseActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if (hasFlash){
                     sequence = morseCodes.getMorseSequence(morseText.getText().toString());
-                    Thread thread = new Thread(new MorseHandler(sequence));
+                    MorseHandler morseHandler = new MorseHandler(sequence);
+                    Thread thread = new Thread(morseHandler);
                     thread.start();
+                    transmitAlert(morseText.getText().toString(), morseHandler);
                 }else{
                     AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
                     alert.setTitle("No flashlight!");
@@ -137,6 +138,18 @@ public class MorseActivity extends ActionBarActivity {
         });
     }
 
+    private void transmitAlert(String message, final MorseHandler morseHandler) {
+        AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
+        alert.setTitle("Transmitting...");
+        alert.setMessage("Transmitting morse message: " + message);
+        alert.setButton("Stop", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                morseHandler.stopThread();
+                finish();
+            }
+        });
+        alert.show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
