@@ -2,6 +2,8 @@ package com.example.emilovich.boyscout.Entities;
 
 import android.hardware.Camera;
 
+import com.example.emilovich.boyscout.Activities.MorseActivity;
+
 import java.util.ArrayList;
 
 /**
@@ -9,49 +11,23 @@ import java.util.ArrayList;
  */
 public class MorseHandler implements Runnable {
 
-
-    private Camera camera;
-    private Camera.Parameters params;
-    boolean stopblink;
+    public static boolean stopblink;
     private ArrayList<String> sequence = new ArrayList<>();
 
     public MorseHandler(ArrayList<String> morseSequence) {
-        if (camera == null || params == null) {
-            setUpCamera();
-            stopblink = false;
-        }
+
+        MorseActivity.setUpCamera();
         this.sequence = morseSequence;
     }
 
-    //check if phone has flashlight and sets up camera
-    private void setUpCamera() {
-        camera = Camera.open();
-        params = camera.getParameters();
+    public static void stopThread() {
+        /*if (Thread.currentThread() != null) {*/
+            Thread.currentThread().interrupt();
+
+        MorseActivity.releaseCamera();
     }
 
-    private void flashlightOn() {
-        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-        camera.setParameters(params);
-        camera.startPreview();
-    }
-
-    private void flashlightOff() {
-        params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-        camera.setParameters(params);
-        camera.stopPreview();
-    }
-
-    public void stopThread() {
-
-        if (camera != null) {
-            camera.stopPreview();
-            camera.release();
-            camera = null;
-        }
-        Thread.currentThread().interrupt();
-    }
-
-    public void lastwink (){
+    public static void lastblink() {
         stopblink = true;
     }
 
@@ -64,22 +40,21 @@ public class MorseHandler implements Runnable {
             letterSeq = sequence.get(i);
             for (int k = 0; k < letterSeq.length(); k++) { // bogstav
                 if (!stopblink) { //skulle køre sidste blink
-
                     letter = letterSeq.charAt(k);
                     if (letter == '.') {
                         try {
-                            flashlightOn();
+                            MorseActivity.flashlightOn();
                             Thread.sleep(250);
-                            flashlightOff();
+                            MorseActivity.flashlightOff();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                     if (letter == '-') {
                         try {
-                            flashlightOn();
+                            MorseActivity.flashlightOn();
                             Thread.sleep(1000);
-                            flashlightOff();
+                            MorseActivity.flashlightOff();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -96,15 +71,15 @@ public class MorseHandler implements Runnable {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    stopThread();
                 }
-                else{stopThread();}
                 try {
                     Thread.sleep(1000); // Efter hvert bogstav!
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-        }
-        stopThread();
+        }stopThread();
     }
 }

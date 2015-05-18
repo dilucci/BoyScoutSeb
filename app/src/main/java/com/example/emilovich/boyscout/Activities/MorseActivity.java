@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +30,9 @@ public class MorseActivity extends ActionBarActivity {
     private EditText morseText;
     private Context context;
     private ArrayList<String> sequence;
+    private static Camera camera;
+    private static Camera.Parameters params;
+  //  private MorseHandler morseHandler;
 
     private boolean hasFlash;
     private MorseCode morseCodes;
@@ -42,6 +46,7 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     private void initUI() {
+        //morseHandler = new MorseHandler();
         morseCodes = new MorseCode();
         sequence = new ArrayList<>();
         context = getApplicationContext();
@@ -66,6 +71,7 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
+                    MorseHandler.stopThread();
                     sequence = morseCodes.getMorseSequence("SOS");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
@@ -138,32 +144,19 @@ public class MorseActivity extends ActionBarActivity {
         });
     }
 
-   /* private void transmitAlert(String message, final MorseHandler morseHandler) {
-        AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
-        alert.setTitle("Transmitting...");
-        alert.setMessage("Transmitting morse message: " + message);
-        alert.setButton("Stop", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                morseHandler.lastwink();
-                finish();
-            }
-        });
-        alert.show();
-    }*/
-
     private void transmitAlert(String message, final MorseHandler morseHandler){
         AlertDialog.Builder builder = new AlertDialog.Builder(MorseActivity.this);
         builder.setTitle("Transmitting...");
         builder.setMessage("Transmitting morse message: " + message);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                dialog.cancel();
             }
         });
         builder.setNegativeButton("STOP", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                morseHandler.lastwink();
-                finish();
+                morseHandler.lastblink();
+                dialog.cancel();
             }
         });
         AlertDialog dialog = builder.create();
@@ -190,4 +183,46 @@ public class MorseActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    //check if phone has flashlight and sets up camera
+    public static void setUpCamera() {
+        if (camera == null || params == null) {
+            camera = Camera.open();
+            params = camera.getParameters();
+            MorseHandler.stopblink = false;
+        }
+    }
+
+    public static void releaseCamera(){
+        if (camera != null) {
+            camera.stopPreview();
+            camera.release();
+            camera = null;
+        }
+    }
+
+    public static void flashlightOn() {
+        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(params);
+        camera.startPreview();
+    }
+
+    public static void flashlightOff() {
+        params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+        camera.setParameters(params);
+        camera.stopPreview();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        MorseHandler.stopThread();
+    }
+
+    @Override
+    public void onResume(){
+        //camera.open
+        super.onResume();
+        setUpCamera();
+}
 }
