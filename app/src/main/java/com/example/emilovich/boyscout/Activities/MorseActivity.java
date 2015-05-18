@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.emilovich.boyscout.Entities.MorseCode;
+import com.example.emilovich.boyscout.Entities.MorseController;
 import com.example.emilovich.boyscout.Entities.MorseHandler;
 import com.example.emilovich.boyscout.R;
 
@@ -23,12 +24,14 @@ import java.util.ArrayList;
 
 
 public class MorseActivity extends ActionBarActivity {
+    private final MorseController morseController = new MorseController();
+
     private Button buttonMorseSOS;
     private Button buttonMorseHelp;
     private Button buttonMorse;
     private Button buttonMorseCodes;
     private EditText morseText;
-    private Context context;
+    public static Context context;
     private ArrayList<String> sequence;
     private static Camera camera;
     private static Camera.Parameters params;
@@ -36,6 +39,9 @@ public class MorseActivity extends ActionBarActivity {
 
     private boolean hasFlash;
     private MorseCode morseCodes;
+
+    public MorseActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +52,6 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     private void initUI() {
-        //morseHandler = new MorseHandler();
         morseCodes = new MorseCode();
         sequence = new ArrayList<>();
         context = getApplicationContext();
@@ -71,11 +76,11 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
-                    MorseHandler.stopThread();
+                    morseController.stopBlink();
                     sequence = morseCodes.getMorseSequence("SOS");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
-                    MorseHandler morseHandler = new MorseHandler(sequence);
+                    MorseHandler morseHandler = new MorseHandler(morseController, sequence);
                     Thread thread = new Thread(morseHandler);
                     thread.start();
                     transmitAlert("SOS", morseHandler);
@@ -98,10 +103,11 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
+                    morseController.stopBlink();
                     sequence = morseCodes.getMorseSequence("HELP");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
-                    MorseHandler morseHandler = new MorseHandler(sequence);
+                    MorseHandler morseHandler = new MorseHandler(morseController, sequence);
                     Thread thread = new Thread(morseHandler);
                     thread.start();
                     transmitAlert("HELP", morseHandler);
@@ -124,8 +130,9 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
+                    morseController.stopBlink();
                     sequence = morseCodes.getMorseSequence(morseText.getText().toString());
-                    MorseHandler morseHandler = new MorseHandler(sequence);
+                    MorseHandler morseHandler = new MorseHandler(morseController, sequence);
                     Thread thread = new Thread(morseHandler);
                     thread.start();
                     transmitAlert(morseText.getText().toString(), morseHandler);
@@ -155,7 +162,7 @@ public class MorseActivity extends ActionBarActivity {
         });
         builder.setNegativeButton("STOP", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                morseHandler.lastblink();
+                morseController.stopBlink();
                 dialog.cancel();
             }
         });
@@ -185,7 +192,7 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     //check if phone has flashlight and sets up camera
-    public static void setUpCamera() {
+    /*public static void setUpCamera() {
         if (camera == null || params == null) {
             camera = Camera.open();
             params = camera.getParameters();
@@ -211,18 +218,17 @@ public class MorseActivity extends ActionBarActivity {
         params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
         camera.setParameters(params);
         camera.stopPreview();
-    }
+    }*/
 
     @Override
     public void onPause(){
         super.onPause();
-        MorseHandler.stopThread();
     }
 
     @Override
     public void onResume(){
         //camera.open
         super.onResume();
-        setUpCamera();
+        morseController.setUpCamera();
 }
 }
