@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by Michael on 12-05-2015.
  */
 public class MorseHandler implements Runnable {
-    private String TAG = "Handler";
+    //private String TAG = "Handler";
     private MorseController morseController;
 
     private ArrayList<String> sequence = new ArrayList<>();
@@ -29,15 +29,15 @@ public class MorseHandler implements Runnable {
 
     @Override
     public void run() {
-        Log.d(TAG, "inde i run()!");
+        //Log.d(TAG, "inde i run()!");
         String letterSeq = "";
         char letter;
         for (int i = 0; i < sequence.size(); i++) { //ORD
             letterSeq = sequence.get(i);
             for (int k = 0; k < letterSeq.length(); k++) { // bogstav
-                Log.d(TAG, "inde i for-løkke!");
+                //Log.d(TAG, "inde i for-løkke!");
                 if (morseController.getStopBlink()) {
-                    Log.d(TAG, "BREAK!");
+                    //Log.d(TAG, "BREAK!");
                     stopThread();
                     break;
                 }else{
@@ -45,10 +45,11 @@ public class MorseHandler implements Runnable {
                     if (letter == '.') {
                         try {
                             morseController.flashlightOn();
-                            Log.d(TAG, "FlashlightOn()!");
+                            morseController.vibrate(250);
+                            //Log.d(TAG, "FlashlightOn()!");
                             Thread.sleep(250);
                             morseController.flashlightOff();
-                            Log.d(TAG, "FlashlightOff()!");
+                            //Log.d(TAG, "FlashlightOff()!");
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -56,6 +57,7 @@ public class MorseHandler implements Runnable {
                     if (letter == '-') {
                         try {
                             morseController.flashlightOn();
+                            morseController.vibrate(1000);
                             Thread.sleep(1000);
                             morseController.flashlightOff();
                         } catch (InterruptedException e) {

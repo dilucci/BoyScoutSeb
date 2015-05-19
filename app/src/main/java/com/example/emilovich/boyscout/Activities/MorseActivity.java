@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,19 +25,17 @@ import java.util.ArrayList;
 
 
 public class MorseActivity extends ActionBarActivity {
-    private final MorseController morseController = new MorseController();
+    private MorseController morseController;
 
     private Button buttonMorseSOS;
     private Button buttonMorseHelp;
     private Button buttonMorse;
     private Button buttonMorseCodes;
     private EditText morseText;
-    public static Context context;
+    private Context context;
     private ArrayList<String> sequence;
-    private static Camera camera;
-    private static Camera.Parameters params;
-  //  private MorseHandler morseHandler;
 
+    private Vibrator vibe;
     private boolean hasFlash;
     private MorseCode morseCodes;
 
@@ -52,6 +51,8 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     private void initUI() {
+        vibe = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        morseController = new MorseController(vibe);
         morseCodes = new MorseCode();
         sequence = new ArrayList<>();
         context = getApplicationContext();
@@ -76,7 +77,7 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
-                    morseController.stopBlink();
+                    //morseController.stopBlink();
                     sequence = morseCodes.getMorseSequence("SOS");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
@@ -103,7 +104,7 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
-                    morseController.stopBlink();
+                    //morseController.stopBlink();
                     sequence = morseCodes.getMorseSequence("HELP");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
@@ -130,7 +131,7 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
-                    morseController.stopBlink();
+                    //morseController.stopBlink();
                     sequence = morseCodes.getMorseSequence(morseText.getText().toString());
                     MorseHandler morseHandler = new MorseHandler(morseController, sequence);
                     Thread thread = new Thread(morseHandler);
