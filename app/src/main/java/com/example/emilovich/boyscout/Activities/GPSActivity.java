@@ -22,6 +22,9 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
     private TextView textViewCoordinates;
     private final int minTime = 5000;     // minimum time interval between location updates, in milliseconds - 5s
     private final int minDistance = 2;    // minimum distance between location updates, in meters
+    private LocationManager locationManager;
+    private String provider;
+    private Criteria criteria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +33,6 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
         textViewCoordinates = (TextView) findViewById(R.id.textViewCoordinates);
         setUpMapIfNeeded();
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpMapIfNeeded();
-    }
-
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
      * installed) and the map has not already been instantiated.. This will ensure that we only ever
@@ -78,13 +74,13 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
         mMap.setMyLocationEnabled(true);
 
         // Get LocationManager object from System Service LOCATION_SERVICE
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         // Create a criteria object to retrieve provider
-        Criteria criteria = new Criteria();
+        criteria = new Criteria();
 
         // Get the name of the best provider
-        String provider = locationManager.getBestProvider(criteria, true);
+        provider = locationManager.getBestProvider(criteria, true);
 
         // Get Current Location
         Location currentLocation = locationManager.getLastKnownLocation(provider);
@@ -113,10 +109,27 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(getApplicationContext(), "Location Changed!",
-                Toast.LENGTH_LONG).show();
+        /*Toast.makeText(getApplicationContext(), "Location Changed!",
+                Toast.LENGTH_LONG).show();*/
         textViewCoordinates.setText("latitude: " + location.getLatitude() + " \nlongitude: " + location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+    }
+
+    @Override
+    public void onPause(){
+        Toast.makeText(getApplicationContext(), "onPause()!",
+                Toast.LENGTH_LONG).show();
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
+    protected void onResume() {
+        Toast.makeText(getApplicationContext(), "onResume()!",
+                Toast.LENGTH_LONG).show();
+        super.onResume();
+        setUpMapIfNeeded();
+        locationManager.requestLocationUpdates(provider, minTime, minDistance, this);
     }
 
     @Override
