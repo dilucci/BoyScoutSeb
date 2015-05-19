@@ -62,7 +62,6 @@ public class MorseActivity extends ActionBarActivity {
         buttonMorseHelp = (Button) findViewById(R.id.buttonMorseHelp);
         buttonMorse = (Button) findViewById(R.id.buttonMorse);
         buttonMorseCodes = (Button) findViewById(R.id.buttonMorseCodes);
-        //setUpCamera();
 
         buttonMorseCodes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +76,6 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
-                    //morseController.stopBlink();
                     sequence = morseCodes.getMorseSequence("SOS");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
@@ -104,7 +102,6 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
-                    //morseController.stopBlink();
                     sequence = morseCodes.getMorseSequence("HELP");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
@@ -131,7 +128,6 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
-                    //morseController.stopBlink();
                     sequence = morseCodes.getMorseSequence(morseText.getText().toString());
                     MorseHandler morseHandler = new MorseHandler(morseController, sequence);
                     Thread thread = new Thread(morseHandler);
@@ -192,43 +188,14 @@ public class MorseActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //check if phone has flashlight and sets up camera
-    /*public static void setUpCamera() {
-        if (camera == null || params == null) {
-            camera = Camera.open();
-            params = camera.getParameters();
-            MorseHandler.stopblink = false;
-        }
-    }
-
-    public static void releaseCamera(){
-        if (camera != null) {
-            camera.stopPreview();
-            camera.release();
-            camera = null;
-        }
-    }
-
-    public static void flashlightOn() {
-        params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-        camera.setParameters(params);
-        camera.startPreview();
-    }
-
-    public static void flashlightOff() {
-        params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-        camera.setParameters(params);
-        camera.stopPreview();
-    }*/
-
     @Override
     public void onPause(){
         super.onPause();
+        morseController.releaseCamera();
     }
 
     @Override
     public void onResume(){
-        //camera.open
         super.onResume();
         morseController.setUpCamera();
 }
