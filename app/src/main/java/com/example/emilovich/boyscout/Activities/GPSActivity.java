@@ -3,9 +3,12 @@ package com.example.emilovich.boyscout.Activities;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.emilovich.boyscout.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,13 +17,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class GPSActivity extends FragmentActivity {
+public class GPSActivity extends FragmentActivity implements LocationListener {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private TextView textViewCoordinates;
+    private final int minTime = 5000;     // minimum time interval between location updates, in milliseconds - 5s
+    private final int minDistance = 2;    // minimum distance between location updates, in meters
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps);
+        textViewCoordinates = (TextView) findViewById(R.id.textViewCoordinates);
         setUpMapIfNeeded();
     }
 
@@ -90,6 +97,7 @@ public class GPSActivity extends FragmentActivity {
 
         // Get longitude of the current location
         double longitude = currentLocation.getLongitude();
+        textViewCoordinates.setText("latitude: " + latitude + " \nlongitude: " + longitude);
 
         // Create a LatLng object for the current location
         LatLng latLng = new LatLng(latitude, longitude);
@@ -100,5 +108,29 @@ public class GPSActivity extends FragmentActivity {
         // Zoom in the Google Map
         mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
         mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("You can't hide ;-)"));
+        locationManager.requestLocationUpdates(provider, minTime, minDistance, this);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Toast.makeText(getApplicationContext(), "Location Changed!",
+                Toast.LENGTH_LONG).show();
+        textViewCoordinates.setText("latitude: " + location.getLatitude() + " \nlongitude: " + location.getLongitude());
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
