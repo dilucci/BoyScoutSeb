@@ -11,7 +11,7 @@ public class MorseCode {
 
     public ArrayList<String> getMorseSequence(String stringToMorse) {
         stringToMorse = stringToMorse.toLowerCase();
-        //String str = "SOS";
+        //String str = "sos";
         //String[] sosSequence = {"...","---","..."};
         ArrayList<String> sequence = new ArrayList<>();
 

@@ -70,18 +70,18 @@ public class MorseActivity extends ActionBarActivity {
             }
         });
 
-        //Morse SOS
+        //Morse sos
         buttonMorseSOS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
-                    sequence = morseCodes.getMorseSequence("SOS");
+                    sequence = morseCodes.getMorseSequence("sos");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
                     MorseHandler morseHandler = new MorseHandler(morseController, sequence);
                     Thread thread = new Thread(morseHandler);
                     thread.start();
-                    transmitAlert("SOS", morseHandler);
+                    transmitAlert("sos", morseHandler);
                 }else{
                     AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
                     alert.setTitle("No flashlight!");
@@ -101,13 +101,13 @@ public class MorseActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (hasFlash){
-                    sequence = morseCodes.getMorseSequence("HELP");
+                    sequence = morseCodes.getMorseSequence("help");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
                     MorseHandler morseHandler = new MorseHandler(morseController, sequence);
                     Thread thread = new Thread(morseHandler);
                     thread.start();
-                    transmitAlert("HELP", morseHandler);
+                    transmitAlert("help", morseHandler);
                 }else{
                     AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
                     alert.setTitle("No flashlight!");
