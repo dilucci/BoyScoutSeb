@@ -20,7 +20,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class GPSActivity extends FragmentActivity implements LocationListener {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private TextView textViewCoordinates;
-    private final int minTime = 5000;     // minimum time interval between location updates, in milliseconds - 5s
+    private final int minTime = 3000;     // minimum time interval between location updates, in milliseconds - 3s
     private final int minDistance = 2;    // minimum distance between location updates, in meters
     private LocationManager locationManager;
     private String provider;
@@ -82,28 +82,29 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
         // Get the name of the best provider
         provider = locationManager.getBestProvider(criteria, true);
 
-        // Get Current Location
-        Location currentLocation = locationManager.getLastKnownLocation(provider);
-
         // set map type
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        // Get latitude of the current location
-        double latitude = currentLocation.getLatitude();
+        // Get Current Location
+        Location currentLocation = locationManager.getLastKnownLocation(provider);
+        if(currentLocation != null){
+            // Get latitude of the current location
+            double latitude = currentLocation.getLatitude();
 
-        // Get longitude of the current location
-        double longitude = currentLocation.getLongitude();
-        textViewCoordinates.setText("latitude: " + latitude + " \nlongitude: " + longitude);
+            // Get longitude of the current location
+            double longitude = currentLocation.getLongitude();
+            textViewCoordinates.setText("latitude: " + latitude + " \nlongitude: " + longitude);
 
-        // Create a LatLng object for the current location
-        LatLng latLng = new LatLng(latitude, longitude);
+            // Create a LatLng object for the current location
+            LatLng latLng = new LatLng(latitude, longitude);
 
-        // Show the current location in Google Map
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            // Show the current location in Google Map
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-        // Zoom in the Google Map
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("You can't hide ;-)"));
+            // Zoom in the Google Map
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("You can't hide ;-)"));
+        }
         locationManager.requestLocationUpdates(provider, minTime, minDistance, this);
     }
 
