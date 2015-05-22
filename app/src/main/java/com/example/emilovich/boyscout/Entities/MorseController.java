@@ -11,8 +11,10 @@ public class MorseController {
     private Camera camera;
     private Camera.Parameters params;
     private boolean stopBlink;
+    private boolean flashOn;
     private Vibrator vibe;
     public MorseController(Vibrator vibe){
+        flashOn = false;
         this.vibe = vibe;
     }
     public void setUpCamera() {
@@ -33,12 +35,14 @@ public class MorseController {
     }
 
     public void flashlightOn() {
+        flashOn = true;
         params.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         camera.setParameters(params);
         camera.startPreview();
     }
 
     public void flashlightOff() {
+        flashOn = false;
         params.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
         camera.setParameters(params);
         camera.stopPreview();
@@ -54,5 +58,15 @@ public class MorseController {
 
     public void stopBlink() {
         stopBlink = true;
+    }
+
+    public void toggleFlashlight(){
+        stopBlink();
+        if(flashOn){
+            flashlightOff();
+        }
+        else{
+            flashlightOn();
+        }
     }
 }

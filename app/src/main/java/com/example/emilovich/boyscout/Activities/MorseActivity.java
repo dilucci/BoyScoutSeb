@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class MorseActivity extends ActionBarActivity {
     private MorseController morseController;
-
+    private Button buttonFlashlight;
     private Button buttonMorseSOS;
     private Button buttonMorseHelp;
     private Button buttonMorse;
@@ -61,6 +61,13 @@ public class MorseActivity extends ActionBarActivity {
         buttonMorseHelp = (Button) findViewById(R.id.buttonMorseHelp);
         buttonMorse = (Button) findViewById(R.id.buttonMorse);
         buttonMorseCodes = (Button) findViewById(R.id.buttonMorseCodes);
+        buttonFlashlight = (Button) findViewById(R.id.buttonFlashlight);
+        buttonFlashlight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                morseController.toggleFlashlight();
+            }
+        });
 
         buttonMorseCodes.setOnClickListener(new View.OnClickListener() {
             @Override
