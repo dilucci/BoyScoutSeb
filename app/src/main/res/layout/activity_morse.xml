@@ -65,9 +65,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="On/Off"
         android:id="@+id/buttonFlashlight"
-        android:layout_alignBottom="@+id/buttonMorse"
+        android:background="@drawable/lygte"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>
