@@ -3,61 +3,62 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".HomeActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".HomeActivity"
+    android:background="@drawable/boyscout">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GPS"
         android:id="@+id/buttonGPS"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="34dp"
-        android:layout_marginTop="84dp" />
+        android:layout_marginTop="84dp"
+        android:background="@drawable/gps" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Morse"
         android:id="@+id/buttonMorse"
         android:layout_alignTop="@+id/buttonGPS"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="45dp" />
+        android:layout_marginEnd="45dp"
+        android:background="@drawable/lygte" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alarm"
         android:id="@+id/buttonAlarm"
         android:layout_marginTop="58dp"
         android:layout_below="@+id/buttonGPS"
-        android:layout_alignStart="@+id/buttonGPS" />
+        android:layout_alignStart="@+id/buttonGPS"
+        android:background="@drawable/alarm" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Compass"
         android:id="@+id/buttonCompass"
         android:layout_alignBottom="@+id/buttonAlarm"
-        android:layout_alignStart="@+id/buttonMorse" />
+        android:layout_alignStart="@+id/buttonMorse"
+        android:background="@drawable/kompas" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Weather"
         android:id="@+id/buttonWeather"
         android:layout_marginTop="52dp"
         android:layout_below="@+id/buttonAlarm"
-        android:layout_alignStart="@+id/buttonAlarm" />
+        android:layout_alignStart="@+id/buttonAlarm"
+        android:background="@drawable/vejr" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Camera"
         android:id="@+id/buttonCamera"
         android:layout_alignTop="@+id/buttonWeather"
-        android:layout_alignStart="@+id/buttonCompass" />
+        android:layout_alignStart="@+id/buttonCompass"
+        android:background="@drawable/camera" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -4,13 +4,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.emilovich.boyscout.Activities.MorseActivity">
+    tools:context="com.example.emilovich.boyscout.Activities.MorseActivity"
+    android:background="@drawable/boyscout">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Morse!"
         android:id="@+id/textView6"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -18,19 +18,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SOS"
         android:id="@+id/buttonMorseSOS"
-        android:layout_marginTop="48dp"
-        android:layout_below="@+id/textView6"
-        android:layout_toStartOf="@+id/textView6" />
+        android:background="@drawable/SOS"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_toStartOf="@+id/buttonMorse" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Help"
         android:id="@+id/buttonMorseHelp"
-        android:layout_alignTop="@+id/buttonMorseSOS"
-        android:layout_toEndOf="@+id/textView6" />
+        android:background="@drawable/HELP"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_toEndOf="@+id/buttonMorse" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -38,26 +37,29 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/morseText"
-        android:layout_marginTop="41dp"
+        android:layout_above="@+id/buttonMorse"
+        android:background="@drawable/pergament"
+        android:layout_alignStart="@+id/buttonMorseSOS"
+        android:layout_alignEnd="@+id/buttonMorseHelp"
         android:layout_below="@+id/buttonMorseSOS"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/buttonMorse" />
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Morse"
         android:id="@+id/buttonMorse"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="86dp" />
+        android:layout_marginBottom="42dp"
+        android:background="@drawable/MorseText"
+        android:layout_alignBottom="@+id/buttonMorseCodes"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MorseCodes"
         android:id="@+id/buttonMorseCodes"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/settings" />
 
 </RelativeLayout>
