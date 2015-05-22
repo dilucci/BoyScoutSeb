@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonMorseSOS"
-        android:background="@drawable/SOS"
+        android:background="@drawable/sos"
         android:layout_alignTop="@+id/textView6"
         android:layout_toStartOf="@+id/buttonMorse" />
 
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonMorseHelp"
-        android:background="@drawable/HELP"
+        android:background="@drawable/help"
         android:layout_alignTop="@+id/textView6"
         android:layout_toEndOf="@+id/buttonMorse" />
 
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonMorse"
         android:layout_marginBottom="42dp"
-        android:background="@drawable/MorseText"
+        android:background="@drawable/morsetext"
         android:layout_alignBottom="@+id/buttonMorseCodes"
         android:layout_centerHorizontal="true" />
 
