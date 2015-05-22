@@ -7,12 +7,38 @@
     tools:context="com.example.emilovich.boyscout.Activities.WeatherActivity"
     android:background="@drawable/boyscout">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:background="@drawable/pergament" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/townSearch"
+        android:width="275dp"
+        android:layout_marginTop="51dp"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/buttonSearchTown"
+        android:layout_below="@+id/townSearch"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Weather"
-        android:id="@+id/textView7"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textViewTownResult"
+        android:layout_below="@+id/buttonSearchTown"
+        android:layout_alignStart="@+id/townSearch"
+        android:layout_marginTop="35dp" />
+
 </RelativeLayout>

@@ -31,20 +31,6 @@
         android:layout_alignTop="@+id/textView6"
         android:layout_toEndOf="@+id/buttonMorse" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/morseText"
-        android:layout_above="@+id/buttonMorse"
-        android:background="@drawable/pergament"
-        android:layout_alignStart="@+id/buttonMorseSOS"
-        android:layout_alignEnd="@+id/buttonMorseHelp"
-        android:layout_below="@+id/buttonMorseSOS"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,5 +55,26 @@
         android:background="@drawable/lygte"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:layout_below="@+id/buttonMorseSOS"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/pergament"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="135dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/morseText"
+        android:layout_alignTop="@+id/imageView2"
+        android:layout_alignStart="@+id/buttonMorseSOS"
+        android:layout_marginTop="35dp"
+        android:width="260dp" />
 
 </RelativeLayout>
