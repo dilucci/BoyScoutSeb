@@ -117,16 +117,12 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
 
     @Override
     public void onPause(){
-        Toast.makeText(getApplicationContext(), "onPause()!",
-                Toast.LENGTH_LONG).show();
         super.onPause();
         locationManager.removeUpdates(this);
     }
 
     @Override
     protected void onResume() {
-        Toast.makeText(getApplicationContext(), "onResume()!",
-                Toast.LENGTH_LONG).show();
         super.onResume();
         setUpMapIfNeeded();
         locationManager.requestLocationUpdates(provider, minTime, minDistance, this);
