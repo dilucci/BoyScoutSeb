@@ -7,21 +7,12 @@
     tools:context="com.example.emilovich.boyscout.Activities.CameraActivity"
     android:background="@drawable/boyscout">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Camera"
-        android:id="@+id/textView3"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start camera"
+        android:background="@drawable/camera"
         android:id="@+id/buttonCamera"
-        android:layout_below="@+id/textView3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="169dp" />
+        android:layout_marginTop="440dp" />
 </RelativeLayout>
