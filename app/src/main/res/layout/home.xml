@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonMorse"
-        android:background="@drawable/lygte"
+        android:background="@drawable/torch"
         android:layout_alignEnd="@+id/buttonCompass"
         android:layout_marginBottom="70dp"
         android:layout_above="@+id/buttonCompass" />
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonCompass"
-        android:background="@drawable/kompas"
+        android:background="@drawable/compass"
         android:layout_alignTop="@+id/buttonAlarm"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="30dp" />
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonWeather"
-        android:background="@drawable/vejr"
+        android:background="@drawable/weather"
         android:layout_alignParentBottom="false"
         android:layout_alignStart="@+id/buttonAlarm"
         android:layout_below="@+id/buttonAlarm"
