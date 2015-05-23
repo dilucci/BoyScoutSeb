@@ -109,8 +109,6 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        /*Toast.makeText(getApplicationContext(), "Location Changed!",
-                Toast.LENGTH_LONG).show();*/
         textViewCoordinates.setText("latitude: " + location.getLatitude() + " \nlongitude: " + location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
         mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Marker"));

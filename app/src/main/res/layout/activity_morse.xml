@@ -21,7 +21,8 @@
         android:id="@+id/buttonMorseSOS"
         android:layout_alignTop="@+id/textView6"
         android:layout_toStartOf="@+id/buttonMorse"
-        android:background="@drawable/sos" />
+        android:background="@drawable/sos"
+        android:text="SOS"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -29,7 +30,8 @@
         android:id="@+id/buttonMorseHelp"
         android:background="@drawable/help"
         android:layout_alignTop="@+id/textView6"
-        android:layout_toEndOf="@+id/buttonMorse" />
+        android:layout_toEndOf="@+id/buttonMorse"
+        android:text="HELP"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -38,7 +40,8 @@
         android:layout_marginBottom="42dp"
         android:background="@drawable/morsetext"
         android:layout_alignBottom="@+id/buttonMorseCodes"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Morse \nText!"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -46,7 +49,8 @@
         android:id="@+id/buttonMorseCodes"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/settings" />
+        android:background="@drawable/settings"
+        android:text="Library"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -54,27 +58,25 @@
         android:id="@+id/buttonFlashlight"
         android:background="@drawable/lygte"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:layout_below="@+id/buttonMorseSOS"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/pergament"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="135dp" />
+        android:layout_alignParentStart="true"
+        android:text="On/Off"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/morseText"
-        android:layout_alignTop="@+id/imageView2"
-        android:layout_alignStart="@+id/buttonMorseSOS"
-        android:layout_marginTop="35dp"
-        android:width="260dp" />
+        android:width="260dp"
+        android:hint="Input text to morse!"
+        android:gravity="top"
+        android:lines="6"
+        android:inputType="text"
+        android:imeOptions="actionDone"
+        android:background="@drawable/pergament"
+        android:layout_below="@+id/buttonMorseSOS"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/buttonMorse"
+        android:padding="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"/>
 
 </RelativeLayout>

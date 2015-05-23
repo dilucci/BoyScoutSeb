@@ -62,6 +62,8 @@ public class MorseActivity extends ActionBarActivity {
         buttonMorse = (Button) findViewById(R.id.buttonMorse);
         buttonMorseCodes = (Button) findViewById(R.id.buttonMorseCodes);
         buttonFlashlight = (Button) findViewById(R.id.buttonFlashlight);
+
+
         buttonFlashlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +130,8 @@ public class MorseActivity extends ActionBarActivity {
                 }
             }
         });
+
+
 
         //Morse customer-text
         buttonMorse.setOnClickListener(new View.OnClickListener() {

@@ -10,62 +10,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonGPS"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="84dp"
-        android:background="@drawable/gps" />
+        android:background="@drawable/gps"
+        android:layout_alignStart="@+id/buttonAlarm"
+        android:layout_above="@+id/buttonAlarm"
+        android:layout_marginBottom="70dp" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonMorse"
-        android:layout_alignTop="@+id/buttonGPS"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="45dp"
-        android:background="@drawable/lygte" />
+        android:background="@drawable/lygte"
+        android:layout_alignEnd="@+id/buttonCompass"
+        android:layout_marginBottom="70dp"
+        android:layout_above="@+id/buttonCompass" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonAlarm"
-        android:layout_marginTop="58dp"
-        android:layout_below="@+id/buttonGPS"
-        android:layout_alignStart="@+id/buttonGPS"
-        android:background="@drawable/alarm" />
+        android:background="@drawable/alarm"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonCompass"
-        android:layout_alignBottom="@+id/buttonAlarm"
-        android:layout_alignStart="@+id/buttonMorse"
-        android:background="@drawable/kompas" />
+        android:background="@drawable/kompas"
+        android:layout_alignTop="@+id/buttonAlarm"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="30dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonWeather"
-        android:layout_marginTop="52dp"
-        android:layout_below="@+id/buttonAlarm"
+        android:background="@drawable/vejr"
+        android:layout_alignParentBottom="false"
         android:layout_alignStart="@+id/buttonAlarm"
-        android:background="@drawable/vejr" />
+        android:layout_below="@+id/buttonAlarm"
+        android:layout_marginTop="70dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonCamera"
-        android:layout_alignTop="@+id/buttonWeather"
         android:layout_alignStart="@+id/buttonCompass"
-        android:background="@drawable/camera" />
+        android:background="@drawable/camera"
+        android:layout_below="@+id/buttonAlarm"
+        android:layout_marginTop="70dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="BoyScout-app"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/buttonMorse" />
 </RelativeLayout>
