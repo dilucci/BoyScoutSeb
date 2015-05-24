@@ -16,4 +16,49 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/editTextPhone"
+        android:text="Phone of respective"
+        android:layout_below="@+id/editTextEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editTextEmail"
+        android:layout_marginTop="20dp"
+        android:text="Email of respective"
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/editTextPhone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="A message will be send to the repsective if the alarm is not turned off."
+        android:id="@+id/textView"
+        android:textColor="Black"
+        android:textStyle="bold"
+        android:layout_marginBottom="29dp"
+        android:layout_above="@+id/editTextInterval"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editTextInterval"
+        android:text="Interval in minutes"
+        android:layout_marginBottom="75dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/editTextPhone" />
+
 </RelativeLayout>
