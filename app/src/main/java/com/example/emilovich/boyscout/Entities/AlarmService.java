@@ -20,8 +20,9 @@ import com.example.emilovich.boyscout.Activities.AlarmActivity;
 public class AlarmService extends Service {
     private String phoneNumber;
     private String email;
-    //private long timer;
-    private boolean acknowledged = false;
+    private long timer;
+    private boolean acknowledged;
+    private int count = 1;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -31,17 +32,17 @@ public class AlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //acknowledged = false;
-        Toast.makeText(this, "AlarmService.onStartCommand()", Toast.LENGTH_LONG).show();
+        acknowledged = false;
+        Toast.makeText(this, "AlarmService.onStartCommand()" + count, Toast.LENGTH_LONG).show();
+        count++;
         phoneNumber = intent.getStringExtra("Phone");
         email = intent.getStringExtra("Email");
-        //timer = intent.getLongExtra("Timer",-1);
-        //Toast.makeText(this, "Timer " + timer, Toast.LENGTH_LONG).show();
+        timer = intent.getLongExtra("Timer",-1);
 
         new CountDownTimer(10000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                AlarmActivity.textViewCounter.setText("seconds: " + millisUntilFinished / 1000);
+                AlarmActivity.textViewCounter.setText("seconds: " + (millisUntilFinished/1000));
             }
 
             @Override
@@ -58,7 +59,7 @@ public class AlarmService extends Service {
         alert.setButton("Acknowledge", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                acknowledged = true;
+                //acknowledged = true;
             }
         });
         alert.show();

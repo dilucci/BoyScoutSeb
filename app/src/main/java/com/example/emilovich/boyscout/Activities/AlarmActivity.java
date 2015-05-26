@@ -1,11 +1,9 @@
 package com.example.emilovich.boyscout.Activities;
 
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
-import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.emilovich.boyscout.Entities.AlarmService;
 import com.example.emilovich.boyscout.R;
@@ -40,12 +37,13 @@ public class AlarmActivity extends ActionBarActivity {
 
     private void initUI() {
         textViewCounter = (TextView)findViewById(R.id.textViewCounter);
-        alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         textViewStatus = (TextView)findViewById(R.id.textViewStatus);
         editTextPhone = (EditText)findViewById(R.id.editTextPhone);
         editTextEmail = (EditText)findViewById(R.id.editTextEmail);
         editTextInterval = (EditText)findViewById(R.id.editTextInterval);
         buttonAlarm = (Button)findViewById(R.id.buttonAlarm);
+
         buttonAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,9 +62,9 @@ public class AlarmActivity extends ActionBarActivity {
         Intent intent = new Intent(AlarmActivity.this, AlarmService.class);
         intent.putExtra("Phone", editTextPhone.getText().toString());
         intent.putExtra("Email", editTextEmail.getText().toString());
-        //intent.putExtra("Timer", alarmTimer);
-        pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, 0, intent, 0);
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, alarmTimer, 10000, pendingIntent);
+        intent.putExtra("Timer", alarmTimer);
+        pendingIntent = PendingIntent.getService(AlarmActivity.this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, alarmTimer, 20000, pendingIntent);
 
         //Toast.makeText(getApplicationContext(), "Alarm started!", Toast.LENGTH_LONG).show();
 
