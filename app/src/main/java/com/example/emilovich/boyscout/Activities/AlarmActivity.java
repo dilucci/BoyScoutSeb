@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +19,6 @@ import android.widget.Toast;
 import com.example.emilovich.boyscout.Entities.AlarmService;
 import com.example.emilovich.boyscout.R;
 
-import org.w3c.dom.Text;
-
-import java.util.Calendar;
-
 
 public class AlarmActivity extends ActionBarActivity {
     private EditText editTextPhone;
@@ -33,6 +28,7 @@ public class AlarmActivity extends ActionBarActivity {
     private Button buttonAlarm;
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
+    public static TextView textViewCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +39,7 @@ public class AlarmActivity extends ActionBarActivity {
     }
 
     private void initUI() {
+        textViewCounter = (TextView)findViewById(R.id.textViewCounter);
         alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         textViewStatus = (TextView)findViewById(R.id.textViewStatus);
         editTextPhone = (EditText)findViewById(R.id.editTextPhone);
@@ -62,39 +59,40 @@ public class AlarmActivity extends ActionBarActivity {
     }
 
     public void startAlarm(){
-        long alarmTimer = 3000; //3seconds
+        long alarmTimer = 10000; //10seconds
         //long alarmTimer = Long.parseLong(editTextInterval.getText().toString())*60000;
         Intent intent = new Intent(AlarmActivity.this, AlarmService.class);
         intent.putExtra("Phone", editTextPhone.getText().toString());
         intent.putExtra("Email", editTextEmail.getText().toString());
-        pendingIntent = PendingIntent.getService(AlarmActivity.this, 0, intent, 0);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTimer, pendingIntent);
+        //intent.putExtra("Timer", alarmTimer);
+        pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, 0, intent, 0);
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, alarmTimer, 10000, pendingIntent);
 
-        Toast.makeText(getApplicationContext(), "Alarm started!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Alarm started!", Toast.LENGTH_LONG).show();
 
-        new CountDownTimer(alarmTimer, 1000){
-            @Override
-            public void onTick(long millisUntilFinished) {
-            }
-            @Override
-            public void onFinish() {
-                AlertDialog alert = new AlertDialog.Builder(AlarmActivity.this).create();
-                alert.setTitle("Alarm!");
-                alert.setMessage("You now have 3 minutes to acknowledge the alarm!!");
-                alert.setButton("Acknowledge", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        resetAlarm();
-                    }
-                });
-                alert.show();
-            }
-        }.start();
+
+//        new CountDownTimer(alarmTimer, 1000){
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//            }
+//            @Override
+//            public void onFinish() {
+//                AlertDialog alert = new AlertDialog.Builder(AlarmActivity.this).create();
+//                alert.setTitle("Alarm!");
+//                alert.setMessage("You now have 3 minutes to acknowledge the alarm!!");
+//                alert.setButton("Acknowledge", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.cancel();
+//                        resetAlarm();
+//                    }
+//                });
+//                alert.show();
+//            }
+//        }.start();
     }
 
     public void resetAlarm(){
         stopAlarm();
-        startAlarm();
     }
 
     public void stopAlarm(){

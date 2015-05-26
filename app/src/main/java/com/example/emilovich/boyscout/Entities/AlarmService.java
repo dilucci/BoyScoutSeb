@@ -1,11 +1,17 @@
 package com.example.emilovich.boyscout.Entities;
 
+
+import android.app.AlertDialog;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.example.emilovich.boyscout.Activities.AlarmActivity;
 
 /**
  * Created by Michael on 24-05-2015.
@@ -14,6 +20,8 @@ import android.widget.Toast;
 public class AlarmService extends Service {
     private String phoneNumber;
     private String email;
+    //private long timer;
+    private boolean acknowledged = false;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -23,31 +31,67 @@ public class AlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        //acknowledged = false;
         Toast.makeText(this, "AlarmService.onStartCommand()", Toast.LENGTH_LONG).show();
         phoneNumber = intent.getStringExtra("Phone");
         email = intent.getStringExtra("Email");
-        new CountDownTimer(10000, 1000){
+        //timer = intent.getLongExtra("Timer",-1);
+        //Toast.makeText(this, "Timer " + timer, Toast.LENGTH_LONG).show();
+
+        new CountDownTimer(10000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                AlarmActivity.textViewCounter.setText("seconds: " + millisUntilFinished / 1000);
+            }
+
+            @Override
+            public void onFinish() {
+            }
+        }.start();
+
+
+        acknowledgeCount();
+
+        AlertDialog alert = new AlertDialog.Builder(AlarmService.this).create();
+        alert.setTitle("Alarm!");
+        alert.setMessage("You now have 15 seconds to acknowledge the alarm!!");
+        alert.setButton("Acknowledge", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                acknowledged = true;
+            }
+        });
+        alert.show();
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    public void acknowledgeCount(){
+        //3 minutes pop-up
+        new CountDownTimer(15000, 1000){
             @Override
             public void onTick(long millisUntilFinished) {
             }
+
             @Override
             public void onFinish() {
-//                  Intent intent = new Intent(Intent.ACTION_SEND);
-//                  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                  intent.setType("text/plain");
-//                  intent.putExtra(Intent.EXTRA_EMAIL, email);
-//                  intent.putExtra(Intent.EXTRA_SUBJECT, "WARNING");
-//                  intent.putExtra(Intent.EXTRA_TEXT, "A user of BoyScout has not stopped his alarm!");
-//                  Intent new_intent = Intent.createChooser(intent, "Send Email");
-//                  new_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                  startActivity(new_intent);
+                if(!acknowledged){
+//                Intent intent = new Intent(Intent.ACTION_SEND);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.setType("text/plain");
+//                intent.putExtra(Intent.EXTRA_EMAIL, email);
+//                intent.putExtra(Intent.EXTRA_SUBJECT, "WARNING");
+//                intent.putExtra(Intent.EXTRA_TEXT, "A user of BoyScout has not stopped his alarm!");
+//                Intent new_intent = Intent.createChooser(intent, "Send Email");
+//                new_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(new_intent);
 
-                    SmsManager smsManager = SmsManager.getDefault();
-                    smsManager.sendTextMessage(phoneNumber, null, "A user of BoyScout has not stopped his alarm!", null, null);
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(phoneNumber, null, "A user of BoyScout has not stopped his alarm!", null, null);
+                }
             }
         }.start();
-        return super.onStartCommand(intent, flags, startId);
     }
+
 
     @Override
     public void onDestroy() {
@@ -60,4 +104,6 @@ public class AlarmService extends Service {
         Toast.makeText(this, "AlarmService.onUnBind()", Toast.LENGTH_LONG).show();
         return super.onUnbind(intent);
     }
+
+
 }
