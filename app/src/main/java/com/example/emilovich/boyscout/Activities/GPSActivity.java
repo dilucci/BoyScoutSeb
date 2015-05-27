@@ -15,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GPSActivity extends FragmentActivity implements LocationListener {
@@ -25,6 +26,7 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
     private LocationManager locationManager;
     private String provider;
     private Criteria criteria;
+    private Marker marker;
     public static Location currentLocation;
 
     @Override
@@ -103,16 +105,20 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
 
             // Zoom in the Google Map
             mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-            mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("You can't hide ;-)"));
+            marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("You can't hide ;-)"));
         }
         locationManager.requestLocationUpdates(provider, minTime, minDistance, this);
     }
 
     @Override
     public void onLocationChanged(Location location) {
+        if(marker != null){
+            marker.remove();
+        }
         currentLocation = location;
         textViewCoordinates.setText("latitude: " + location.getLatitude() + " \nlongitude: " + location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("You are here!").snippet("CurrentLocation"));
     }
 
     @Override
