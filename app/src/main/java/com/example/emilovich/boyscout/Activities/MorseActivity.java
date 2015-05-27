@@ -207,7 +207,6 @@ public class MorseActivity extends ActionBarActivity {
 
     @Override
     public void onResume() {
-        Toast.makeText(this, "onResume() ", Toast.LENGTH_SHORT).show();
         super.onResume();
         morseController.setUpCamera();
         morseController.setChooseVibe(settings.getBoolean("chooseVibrator", true));

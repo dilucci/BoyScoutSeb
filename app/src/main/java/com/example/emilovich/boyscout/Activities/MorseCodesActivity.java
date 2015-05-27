@@ -61,7 +61,6 @@ public class MorseCodesActivity extends ActionBarActivity {
     @Override
     protected void onPause() {
         //persist in sharedPreferences - primitive data types.
-        Toast.makeText(this, "onPause() ", Toast.LENGTH_SHORT).show();
         super.onPause();
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("chooseVibrator", chooseVibe);
@@ -70,7 +69,6 @@ public class MorseCodesActivity extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-        Toast.makeText(this, "onResume() ", Toast.LENGTH_SHORT).show();
         super.onResume();
         checkBoxVibration.setChecked(settings.getBoolean("chooseVibrator", true));
     }
