@@ -88,8 +88,6 @@ public class MorseActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if (hasFlash) {
                     sequence = morseCodes.getMorseSequence("sos");
-                    Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
-                            Toast.LENGTH_LONG).show();
                     MorseHandler morseHandler = new MorseHandler(morseController, sequence);
                     Thread thread = new Thread(morseHandler);
                     thread.start();
@@ -114,8 +112,6 @@ public class MorseActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if (hasFlash) {
                     sequence = morseCodes.getMorseSequence("help");
-                    Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
-                            Toast.LENGTH_LONG).show();
                     MorseHandler morseHandler = new MorseHandler(morseController, sequence);
                     Thread thread = new Thread(morseHandler);
                     thread.start();
