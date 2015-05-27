@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,9 +33,11 @@ public class MorseActivity extends ActionBarActivity {
     private Button buttonMorse;
     private Button buttonMorseCodes;
     private EditText morseText;
+    private CheckBox checkBoxVibration;
     private Context context;
     private ArrayList<String> sequence;
 
+    private SharedPreferences settings;
     private Vibrator vibe;
     private boolean hasFlash;
     private MorseCode morseCodes;
@@ -44,9 +48,12 @@ public class MorseActivity extends ActionBarActivity {
         setContentView(R.layout.activity_morse);
 
         initUI();
+        settings = getSharedPreferences("Preferences", 0);
+
     }
 
     private void initUI() {
+        checkBoxVibration = (CheckBox)findViewById(R.id.checkBoxVibration);
         vibe = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         morseController = new MorseController(vibe);
         morseCodes = new MorseCode();
@@ -59,7 +66,18 @@ public class MorseActivity extends ActionBarActivity {
         buttonMorse = (Button) findViewById(R.id.buttonMorse);
         buttonMorseCodes = (Button) findViewById(R.id.buttonMorseCodes);
         buttonFlashlight = (Button) findViewById(R.id.buttonFlashlight);
+        checkBoxVibration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //persist in sharedPreferences - primitive data types.
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean("chooseVibrator", checkBoxVibration.isChecked());
+                editor.commit();
 
+                boolean vibrationIsChecked = settings.getBoolean("chooseVibrator", true);
+                morseController.setChooseVibe(vibrationIsChecked);
+            }
+        });
 
         buttonFlashlight.setOnClickListener(new View.OnClickListener() {
             @Override

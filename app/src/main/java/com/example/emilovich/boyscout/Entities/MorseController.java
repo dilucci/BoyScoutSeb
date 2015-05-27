@@ -8,6 +8,7 @@ public class MorseController {
     private Camera.Parameters params;
     private boolean stopBlink;
     private boolean flashOn;
+    private boolean chooseVibe;
     private Vibrator vibe;
 
     public MorseController(Vibrator vibe){
@@ -65,5 +66,13 @@ public class MorseController {
         else{
             flashlightOn();
         }
+    }
+
+    public boolean isChooseVibe() {
+        return chooseVibe;
+    }
+
+    public void setChooseVibe(boolean chooseVibe) {
+        this.chooseVibe = chooseVibe;
     }
 }

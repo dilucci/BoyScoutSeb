@@ -32,7 +32,8 @@ public class MorseHandler implements Runnable {
                     if (letter == '.') {
                         try {
                             morseController.flashlightOn();
-                            morseController.vibrate(250);
+                            if(morseController.isChooseVibe())
+                                morseController.vibrate(250);
                             Thread.sleep(250);
                             morseController.flashlightOff();
                         } catch (InterruptedException e) {
@@ -42,7 +43,8 @@ public class MorseHandler implements Runnable {
                     if (letter == '-') {
                         try {
                             morseController.flashlightOn();
-                            morseController.vibrate(1000);
+                            if(morseController.isChooseVibe())
+                                morseController.vibrate(1000);
                             Thread.sleep(1000);
                             morseController.flashlightOff();
                         } catch (InterruptedException e) {
