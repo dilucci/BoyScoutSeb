@@ -88,7 +88,7 @@
             android:name=".Activities.GPSActivity"
             android:label="@string/title_activity_gps" >
         </activity>
-        <service android:name=".Entities.AlarmService" />
+        <service android:name=".Controllers.AlarmService" />
     </application>
 
 </manifest>

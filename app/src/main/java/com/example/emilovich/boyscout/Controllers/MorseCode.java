@@ -1,4 +1,4 @@
-package com.example.emilovich.boyscout.Entities;
+package com.example.emilovich.boyscout.Controllers;
 
 import java.util.ArrayList;
 

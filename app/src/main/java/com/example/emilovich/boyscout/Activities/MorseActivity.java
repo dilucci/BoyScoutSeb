@@ -13,13 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.emilovich.boyscout.Entities.MorseCode;
-import com.example.emilovich.boyscout.Entities.MorseController;
-import com.example.emilovich.boyscout.Entities.MorseHandler;
+import com.example.emilovich.boyscout.Controllers.MorseCode;
+import com.example.emilovich.boyscout.Controllers.MorseController;
+import com.example.emilovich.boyscout.Controllers.MorseHandler;
 import com.example.emilovich.boyscout.R;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class MorseActivity extends ActionBarActivity {
     private Button buttonMorse;
     private Button buttonMorseCodes;
     private EditText morseText;
-    private CheckBox checkBoxVibration;
+
     private Context context;
     private ArrayList<String> sequence;
 
@@ -53,7 +52,6 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     private void initUI() {
-        checkBoxVibration = (CheckBox)findViewById(R.id.checkBoxVibration);
         vibe = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         morseController = new MorseController(vibe);
         morseCodes = new MorseCode();
@@ -66,18 +64,7 @@ public class MorseActivity extends ActionBarActivity {
         buttonMorse = (Button) findViewById(R.id.buttonMorse);
         buttonMorseCodes = (Button) findViewById(R.id.buttonMorseCodes);
         buttonFlashlight = (Button) findViewById(R.id.buttonFlashlight);
-        checkBoxVibration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //persist in sharedPreferences - primitive data types.
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean("chooseVibrator", checkBoxVibration.isChecked());
-                editor.commit();
 
-                boolean vibrationIsChecked = settings.getBoolean("chooseVibrator", true);
-                morseController.setChooseVibe(vibrationIsChecked);
-            }
-        });
 
         buttonFlashlight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +85,7 @@ public class MorseActivity extends ActionBarActivity {
         buttonMorseSOS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (hasFlash){
+                if (hasFlash) {
                     sequence = morseCodes.getMorseSequence("sos");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
@@ -106,7 +93,7 @@ public class MorseActivity extends ActionBarActivity {
                     Thread thread = new Thread(morseHandler);
                     thread.start();
                     transmitAlert("sos", morseHandler);
-                }else{
+                } else {
                     AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
                     alert.setTitle("No flashlight!");
                     alert.setMessage("Your device does not support this feature!");
@@ -124,7 +111,7 @@ public class MorseActivity extends ActionBarActivity {
         buttonMorseHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (hasFlash){
+                if (hasFlash) {
                     sequence = morseCodes.getMorseSequence("help");
                     Toast.makeText(getApplicationContext(), "sequence: " + sequence.toString(),
                             Toast.LENGTH_LONG).show();
@@ -132,7 +119,7 @@ public class MorseActivity extends ActionBarActivity {
                     Thread thread = new Thread(morseHandler);
                     thread.start();
                     transmitAlert("help", morseHandler);
-                }else{
+                } else {
                     AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
                     alert.setTitle("No flashlight!");
                     alert.setMessage("Your device does not support this feature!");
@@ -150,13 +137,13 @@ public class MorseActivity extends ActionBarActivity {
         buttonMorse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (hasFlash){
+                if (hasFlash) {
                     sequence = morseCodes.getMorseSequence(morseText.getText().toString());
                     MorseHandler morseHandler = new MorseHandler(morseController, sequence);
                     Thread thread = new Thread(morseHandler);
                     thread.start();
                     transmitAlert(morseText.getText().toString(), morseHandler);
-                }else{
+                } else {
                     AlertDialog alert = new AlertDialog.Builder(MorseActivity.this).create();
                     alert.setTitle("No flashlight!");
                     alert.setMessage("Your device does not support this feature!");
@@ -171,7 +158,7 @@ public class MorseActivity extends ActionBarActivity {
         });
     }
 
-    private void transmitAlert(String message, final MorseHandler morseHandler){
+    private void transmitAlert(String message, final MorseHandler morseHandler) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MorseActivity.this);
         builder.setTitle("Transmitting...");
         builder.setMessage("Transmitting morse message: " + message);
@@ -212,14 +199,20 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         morseController.releaseCamera();
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         morseController.setUpCamera();
-}
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        morseController.setChooseVibe(settings.getBoolean("chooseVibrator", true));
+    }
 }

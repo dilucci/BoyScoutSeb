@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.emilovich.boyscout.Entities.AlarmService;
+import com.example.emilovich.boyscout.Controllers.AlarmService;
 import com.example.emilovich.boyscout.R;
 
 
@@ -36,6 +36,7 @@ public class AlarmActivity extends ActionBarActivity {
     private boolean acknowledged;
     private CountDownTimer cdTimer;
     private Ringtone r;
+    private final long acknowledgeTime = 15000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +139,7 @@ public class AlarmActivity extends ActionBarActivity {
 
     public void acknowledgeCount(){
         //15 seconds pop-up
-        cdTimer = new CountDownTimer(15000, 1000){
+        cdTimer = new CountDownTimer(acknowledgeTime, 1000){
             @Override
             public void onTick(long millisUntilFinished) {
             }

@@ -1,19 +1,37 @@
 package com.example.emilovich.boyscout.Activities;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import com.example.emilovich.boyscout.R;
 
 
 public class MorseCodesActivity extends ActionBarActivity {
+    private CheckBox checkBoxVibration;
+    private SharedPreferences settings;
+    private boolean chooseVibe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_morse_codes);
+
+        chooseVibe = true;
+        settings = getSharedPreferences("Preferences", 0);
+        checkBoxVibration = (CheckBox)findViewById(R.id.checkBoxVibration);
+        checkBoxVibration.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //persist in sharedPreferences - primitive data types.
+                chooseVibe = checkBoxVibration.isChecked();
+            }
+        });
     }
 
 
@@ -37,5 +55,13 @@ public class MorseCodesActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onPause();
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("chooseVibrator", chooseVibe);
+        editor.commit();
     }
 }
