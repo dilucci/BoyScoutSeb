@@ -19,24 +19,13 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/editTextEmail"
-        android:layout_marginTop="20dp"
-        android:hint="Email of respective"
-        android:layout_below="@+id/textView2"
-        android:layout_alignStart="@+id/editTextPhone" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:inputType="phone"
         android:ems="10"
         android:id="@+id/editTextPhone"
         android:hint="Phone of respective"
-        android:layout_below="@+id/editTextEmail"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/textView2" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,8 +34,8 @@
         android:text="A message will be send to the repsective if the alarm is not turned off."
         android:id="@+id/textView"
         android:textStyle="bold"
-        android:layout_above="@+id/editTextInterval"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/editTextPhone"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -55,17 +44,17 @@
         android:ems="10"
         android:id="@+id/editTextInterval"
         android:hint="Interval in minutes"
-        android:layout_above="@+id/buttonAlarm"
-        android:layout_alignStart="@+id/editTextPhone" />
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Save"
         android:id="@+id/buttonAlarm"
-        android:layout_marginBottom="53dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/editTextInterval"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,7 +76,8 @@
         android:layout_height="wrap_content"
         android:text="STOP"
         android:id="@+id/buttonStop"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/textView2" />
+        android:layout_below="@+id/buttonAlarm"
+        android:layout_alignStart="@+id/buttonAlarm"
+        android:layout_marginTop="50dp" />
 
 </RelativeLayout>

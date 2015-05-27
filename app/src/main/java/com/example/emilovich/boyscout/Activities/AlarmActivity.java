@@ -6,8 +6,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -25,7 +26,6 @@ import com.example.emilovich.boyscout.R;
 
 public class AlarmActivity extends ActionBarActivity {
     private EditText editTextPhone;
-    private EditText editTextEmail;
     private EditText editTextInterval;
     private TextView textViewStatus;
     private Button buttonAlarm;
@@ -35,24 +35,39 @@ public class AlarmActivity extends ActionBarActivity {
     private Intent intent;
     private boolean acknowledged;
     private CountDownTimer cdTimer;
-    private Location currentLocation;
+    private Ringtone r;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
-        initUI();
+        if(GPSActivity.currentLocation != null){
+            initUI();
+        }else{
+            AlertDialog alert = new AlertDialog.Builder(this).create();
+            alert.setTitle("Error!");
+            alert.setMessage("Make sure you have started gps before using this feature!");
+            alert.setButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            alert.show();
+        }
+
     }
 
     private void initUI() {
-//        GPSActivity.getInstance().setUpMapIfNeeded();
-//        currentLocation = GPSActivity.getInstance().getCurrentLocation();
+
+
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+
         acknowledged = false;
         alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         textViewStatus = (TextView)findViewById(R.id.textViewStatus);
         editTextPhone = (EditText)findViewById(R.id.editTextPhone);
-        editTextEmail = (EditText)findViewById(R.id.editTextEmail);
         editTextInterval = (EditText)findViewById(R.id.editTextInterval);
         buttonAlarm = (Button)findViewById(R.id.buttonAlarm);
         buttonStop = (Button)findViewById(R.id.buttonStop);
@@ -61,12 +76,13 @@ public class AlarmActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 stopAlarm();
+                r.stop();
             }
         });
         buttonAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((!editTextPhone.getText().toString().equals("")) && (!editTextEmail.getText().toString().equals("")) && (!editTextInterval.getText().toString().equals(""))) {
+                if ((!editTextPhone.getText().toString().equals("")) && (!editTextInterval.getText().toString().equals(""))) {
                     startAlarm();
                 } else {
                     textViewStatus.setText("Fill out inputs!");
@@ -77,12 +93,7 @@ public class AlarmActivity extends ActionBarActivity {
 
     public void startAlarm(){
         acknowledged = false;
-        long alarmTimer = 15000; //10second
-//        long alarmTimer = Long.parseLong(editTextInterval.getText().toString())*60000;
-//        intent.putExtra("Phone", editTextPhone.getText().toString());
-//        intent.putExtra("Email", editTextEmail.getText().toString());
-//        intent.putExtra("Timer", alarmTimer);
-//        intent.putExtra("Ack", acknowledged);
+        long alarmTimer = Long.parseLong(editTextInterval.getText().toString())*60000;
         pendingIntent = PendingIntent.getService(AlarmActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, alarmTimer, pendingIntent);
 
@@ -101,15 +112,17 @@ public class AlarmActivity extends ActionBarActivity {
     }
 
     public void alertAlarm(){
+        r.play();
         AlertDialog alert = new AlertDialog.Builder(this).create();
         alert.setTitle("Alarm!");
-        alert.setMessage("You now have 30 seconds to acknowledge the alarm!!");
+        alert.setMessage("You now have 15 seconds to acknowledge the alarm!!");
         alert.setButton("Acknowledge", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
                 acknowledged = true;
                 resetAlarm();
                 cdTimer.cancel();
+                r.stop();
             }
         });
         alert.show();
@@ -125,8 +138,8 @@ public class AlarmActivity extends ActionBarActivity {
     }
 
     public void acknowledgeCount(){
-        //3 minutes pop-up
-        cdTimer = new CountDownTimer(30000, 1000){
+        //15 seconds pop-up
+        cdTimer = new CountDownTimer(15000, 1000){
             @Override
             public void onTick(long millisUntilFinished) {
             }
