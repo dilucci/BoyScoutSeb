@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -47,7 +48,7 @@ public class MorseActivity extends ActionBarActivity {
         setContentView(R.layout.activity_morse);
 
         initUI();
-        settings = getSharedPreferences("Preferences", 0);
+        settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
     }
 
@@ -206,13 +207,9 @@ public class MorseActivity extends ActionBarActivity {
 
     @Override
     public void onResume() {
+        Toast.makeText(this, "onResume() ", Toast.LENGTH_SHORT).show();
         super.onResume();
         morseController.setUpCamera();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         morseController.setChooseVibe(settings.getBoolean("chooseVibrator", true));
     }
 }

@@ -1,6 +1,8 @@
 package com.example.emilovich.boyscout.Activities;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.example.emilovich.boyscout.R;
 
@@ -16,19 +19,17 @@ public class MorseCodesActivity extends ActionBarActivity {
     private CheckBox checkBoxVibration;
     private SharedPreferences settings;
     private boolean chooseVibe;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_morse_codes);
 
         chooseVibe = true;
-        settings = getSharedPreferences("Preferences", 0);
+        settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         checkBoxVibration = (CheckBox)findViewById(R.id.checkBoxVibration);
         checkBoxVibration.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //persist in sharedPreferences - primitive data types.
                 chooseVibe = checkBoxVibration.isChecked();
             }
         });
@@ -58,10 +59,19 @@ public class MorseCodesActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onStop() {
+    protected void onPause() {
+        //persist in sharedPreferences - primitive data types.
+        Toast.makeText(this, "onPause() ", Toast.LENGTH_SHORT).show();
         super.onPause();
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("chooseVibrator", chooseVibe);
         editor.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        Toast.makeText(this, "onResume() ", Toast.LENGTH_SHORT).show();
+        super.onResume();
+        checkBoxVibration.setChecked(settings.getBoolean("chooseVibrator", true));
     }
 }
