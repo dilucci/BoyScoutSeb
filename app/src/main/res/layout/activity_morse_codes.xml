@@ -41,8 +41,8 @@
         android:layout_height="wrap_content"
         android:text="Vibration"
         android:id="@+id/checkBoxVibration"
+        android:layout_marginBottom="132dp"
+        android:checked="true"
         android:layout_alignBottom="@+id/imageViewMorseCodes"
-        android:layout_alignStart="@+id/imageViewMorseCodes2"
-        android:layout_marginBottom="129dp"
-        android:checked="true" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
