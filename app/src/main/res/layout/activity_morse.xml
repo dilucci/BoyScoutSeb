@@ -21,14 +21,14 @@
         android:id="@+id/buttonMorseSOS"
         android:layout_alignTop="@+id/textView6"
         android:layout_toStartOf="@+id/buttonMorse"
-        android:background="@drawable/sos"
+        android:background="@drawable/std"
         android:text="SOS"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonMorseHelp"
-        android:background="@drawable/help"
+        android:background="@drawable/std"
         android:layout_alignTop="@+id/textView6"
         android:layout_toEndOf="@+id/buttonMorse"
         android:text="HELP"/>
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/buttonMorse"
         android:layout_marginBottom="42dp"
-        android:background="@drawable/morsetext"
+        android:background="@drawable/std"
         android:layout_alignBottom="@+id/buttonMorseCodes"
         android:layout_centerHorizontal="true"
         android:text="Morse \nText!"/>
@@ -49,14 +49,14 @@
         android:id="@+id/buttonMorseCodes"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/settings"
-        android:text="Library"/>
+        android:background="@drawable/std"
+        android:text="More"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonFlashlight"
-        android:background="@drawable/torch"
+        android:background="@drawable/std"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:text="On/Off"/>

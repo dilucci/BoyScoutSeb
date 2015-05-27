@@ -18,13 +18,11 @@
         android:inputType="text"
         android:imeOptions="actionDone"
         android:background="@drawable/pergament"
-        android:layout_below="@+id/buttonMorseSOS"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/buttonMorse"
-        android:padding="40dp"
         android:layout_marginBottom="120dp"
         android:layout_marginTop="20dp"
-        android:layout_alignParentTop="false" />
+        android:layout_alignParentTop="false"
+        android:padding="40dp" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -34,7 +32,7 @@
         android:id="@+id/buttonSearchTown"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/sos"/>
+        android:background="@drawable/std"/>
 
     <TextView
         android:layout_width="wrap_content"
