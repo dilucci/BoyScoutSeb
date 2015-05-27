@@ -60,7 +60,6 @@ public class AlarmActivity extends ActionBarActivity {
 
     private void initUI() {
 
-
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         r = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
@@ -147,16 +146,6 @@ public class AlarmActivity extends ActionBarActivity {
             @Override
             public void onFinish() {
                 if(!acknowledged){
-//                Intent intent = new Intent(Intent.ACTION_SEND);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.setType("text/plain");
-//                intent.putExtra(Intent.EXTRA_EMAIL, email);
-//                intent.putExtra(Intent.EXTRA_SUBJECT, "WARNING");
-//                intent.putExtra(Intent.EXTRA_TEXT, "A user of BoyScout has not stopped his alarm!");
-//                Intent new_intent = Intent.createChooser(intent, "Send Email");
-//                new_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(new_intent);
-
                     SmsManager smsManager = SmsManager.getDefault();
                     smsManager.sendTextMessage(editTextPhone.getText().toString(), null, "A user of BoyScout has not stopped his alarm! \n coordinates: longitude - " + GPSActivity.currentLocation.getLongitude() + " latitude - " + GPSActivity.currentLocation.getLatitude() , null, null);
                 }

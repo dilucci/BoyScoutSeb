@@ -1,16 +1,7 @@
 package com.example.emilovich.boyscout.Entities;
 
-import android.hardware.Camera;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.example.emilovich.boyscout.Activities.MorseActivity;
-
 import java.util.ArrayList;
 
-/**
- * Created by Michael on 12-05-2015.
- */
 public class MorseHandler implements Runnable {
     private MorseController morseController;
 

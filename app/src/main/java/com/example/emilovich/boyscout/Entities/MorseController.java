@@ -3,16 +3,13 @@ package com.example.emilovich.boyscout.Entities;
 import android.hardware.Camera;
 import android.os.Vibrator;
 
-/**
- * Created by Michael on 18-05-2015.
- */
-
 public class MorseController {
     private Camera camera;
     private Camera.Parameters params;
     private boolean stopBlink;
     private boolean flashOn;
     private Vibrator vibe;
+
     public MorseController(Vibrator vibe){
         flashOn = false;
         this.vibe = vibe;

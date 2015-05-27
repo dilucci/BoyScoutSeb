@@ -38,9 +38,6 @@ public class MorseActivity extends ActionBarActivity {
     private boolean hasFlash;
     private MorseCode morseCodes;
 
-    public MorseActivity() {
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,8 +127,6 @@ public class MorseActivity extends ActionBarActivity {
                 }
             }
         });
-
-
 
         //Morse customer-text
         buttonMorse.setOnClickListener(new View.OnClickListener() {

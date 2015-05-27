@@ -67,11 +67,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".Activities.AlarmSettingsActivity"
-            android:label="@string/title_activity_alarm_settings"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".Activities.MorseCodesActivity"
             android:label="@string/title_activity_morse_codes"
             android:screenOrientation="portrait" >

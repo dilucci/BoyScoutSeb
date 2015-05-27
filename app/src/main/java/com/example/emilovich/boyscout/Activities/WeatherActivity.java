@@ -46,10 +46,7 @@ public class WeatherActivity extends ActionBarActivity {
         townSearch = (EditText) findViewById(R.id.townSearch);
         textViewTownResult = (TextView) findViewById(R.id.textViewTownResult);
 
-
         buttonSearchTown.setOnClickListener(new View.OnClickListener() {
-            String result = "";
-
             @Override
             public void onClick(View v) {
                 if (!townSearch.getText().toString().equals("")) {
@@ -159,5 +156,15 @@ public class WeatherActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

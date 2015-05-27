@@ -25,16 +25,7 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
     private LocationManager locationManager;
     private String provider;
     private Criteria criteria;
-//    private static GPSActivity singletonGPS = null;
     public static Location currentLocation;
-
-//    public static GPSActivity getInstance(){
-//        if(singletonGPS == null)
-//        {
-//            singletonGPS = new GPSActivity();
-//        }
-//        return singletonGPS;
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,17 +107,12 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
         }
         locationManager.requestLocationUpdates(provider, minTime, minDistance, this);
     }
-//
-//    public Location getCurrentLocation(){
-//        return currentLocation;
-//    }
 
     @Override
     public void onLocationChanged(Location location) {
         currentLocation = location;
         textViewCoordinates.setText("latitude: " + location.getLatitude() + " \nlongitude: " + location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Marker"));
     }
 
     @Override

@@ -94,4 +94,16 @@ public class CameraActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        releaseCamera();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpCamera();
+    }
 }
