@@ -22,7 +22,7 @@
         android:inputType="phone"
         android:ems="10"
         android:id="@+id/editTextPhone"
-        android:hint="@string/phoneOfRelative"
+        android:hint="@string/alarm_activity_phoneOfRelative"
         android:layout_above="@+id/editTextInterval"
         android:layout_alignStart="@+id/editTextInterval"
         android:layout_marginBottom="45dp" />
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/messageInAlarm"
+        android:text="@string/alarm_activity_messageInAlarm"
         android:id="@+id/textView"
         android:textStyle="bold"
         android:layout_marginLeft="30dp"
@@ -46,14 +46,14 @@
         android:inputType="number"
         android:ems="10"
         android:id="@+id/editTextInterval"
-        android:hint="@string/intervalInMinutes"
+        android:hint="@string/alarm_activity_intervalInMinutes"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start"
+        android:text="@string/alarm_activity_start"
         android:id="@+id/buttonAlarm"
         android:background="@drawable/std"
         android:layout_alignTop="@+id/buttonStop"
@@ -77,7 +77,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/stopAlarm"
+        android:text="@string/alarm_activity_stopAlarm"
         android:id="@+id/buttonStop"
         android:background="@drawable/std"
         android:layout_marginBottom="38dp"

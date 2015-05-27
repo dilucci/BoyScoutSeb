@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BoyScout</string>
+
+    <string name="action_settings">Indstillinger</string>
+    <string name="title_activity_alarm">Alarm</string>
+    <string name="title_activity_compass">Kompas</string>
+    <string name="title_activity_morse">Morse</string>
+    <string name="title_activity_weather">Vejret</string>
+    <string name="title_activity_gps">GPS</string>
+    <string name="title_activity_morse_codes">Morse indstillinger</string>
+    <string name="title_activity_camera">Kamera</string>
+    <string name="alarm_activity_start">Start</string>
+    <string name="alarm_activity_stopAlarm">Stop\nalarm</string>
+    <string name="alarm_activity_phoneOfRelative">Indtast telefonnummer</string>
+    <string name="alarm_activity_intervalInMinutes">Interval i minutter</string>
+    <string name="alarm_activity_messageInAlarm">En besked bliver sendt til registreret telefonnummer, hvis alarmen ikke deaktiveres.</string>
+    <string name="camera_activity_startCamera">Start kamera</string>
+    <string name="morse_activity_SOS">SOS</string>
+    <string name="morse_activity_HELP">HELP</string>
+    <string name="morse_activity_morseText">Morse\nTekst!</string>
+    <string name="morse_activity_more">Mere</string>
+    <string name="morse_activity_onOff">Tænd/Sluk</string>
+    <string name="morse_activity_inputTextToMorse">Indsæt tekst til morse</string>
+    <string name="morse_activity_vibration">Vibration</string>
+    <string name="weather_activity_search">Søg</string>
+    <string name="weather_activity_inputCity">Indtast by</string>
+</resources>

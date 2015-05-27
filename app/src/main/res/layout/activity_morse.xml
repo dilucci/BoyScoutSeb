@@ -22,7 +22,7 @@
         android:layout_alignTop="@+id/textView6"
         android:layout_toStartOf="@+id/buttonMorse"
         android:background="@drawable/std"
-        android:text="@string/SOS"/>
+        android:text="@string/morse_activity_SOS"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         android:background="@drawable/std"
         android:layout_alignTop="@+id/textView6"
         android:layout_toEndOf="@+id/buttonMorse"
-        android:text="@string/HELP"/>
+        android:text="@string/morse_activity_HELP"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
         android:background="@drawable/std"
         android:layout_alignBottom="@+id/buttonMorseCodes"
         android:layout_centerHorizontal="true"
-        android:text="@string/morseText"/>
+        android:text="@string/morse_activity_morseText"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/std"
-        android:text="@string/more"/>
+        android:text="@string/morse_activity_more"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -59,14 +59,14 @@
         android:background="@drawable/std"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:text="@string/onOff"/>
+        android:text="@string/morse_activity_onOff"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/morseText"
         android:width="260dp"
-        android:hint="@string/inputTextToMorse"
+        android:hint="@string/morse_activity_inputTextToMorse"
         android:gravity="top"
         android:lines="6"
         android:inputType="text"

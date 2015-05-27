@@ -38,7 +38,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/vibration"
+        android:text="@string/morse_activity_vibration"
         android:id="@+id/checkBoxVibration"
         android:layout_marginBottom="132dp"
         android:checked="true"
