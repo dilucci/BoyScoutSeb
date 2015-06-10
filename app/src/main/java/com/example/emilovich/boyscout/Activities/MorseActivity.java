@@ -53,7 +53,7 @@ public class MorseActivity extends ActionBarActivity {
     }
 
     private void initUI() {
-        vibe = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         morseController = new MorseController(vibe);
         morseCodes = new MorseCode();
         sequence = new ArrayList<>();

@@ -76,7 +76,7 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
         mMap.setMyLocationEnabled(true);
 
         // Get LocationManager object from System Service LOCATION_SERVICE
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
         // Create a criteria object to retrieve provider
         criteria = new Criteria();
@@ -105,7 +105,7 @@ public class GPSActivity extends FragmentActivity implements LocationListener {
 
             // Zoom in the Google Map
             mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-            marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("You can't hide ;-)"));
+            marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("You are here!").snippet("You can't hide ;-)")); //lazy initialization
         }
         locationManager.requestLocationUpdates(provider, minTime, minDistance, this);
     }

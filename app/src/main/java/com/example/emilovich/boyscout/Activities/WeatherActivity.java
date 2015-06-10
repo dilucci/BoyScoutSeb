@@ -124,9 +124,9 @@ public class WeatherActivity extends ActionBarActivity {
                 JSONObject json = new JSONObject(result);
                 String description = json.getJSONArray("weather").getJSONObject(0).getString("description");
                 temp = json.getJSONObject("main").getDouble("temp");
-                tempInCelsius = (temp-273.15);
+                tempInCelsius = (temp-273.15); //in Celcius
                 windSpeed = json.getJSONObject("wind").getDouble("speed");
-                windSpeedInms = (windSpeed*0.44704);
+                windSpeedInms = (windSpeed*0.44704); //in M/s
                 response = description + "\nTemperature " + String.format("%.2f", tempInCelsius) + " C \nWind " + String.format("%.2f", windSpeedInms)  + " m/s";
             } catch (JSONException e) {
                 e.printStackTrace();

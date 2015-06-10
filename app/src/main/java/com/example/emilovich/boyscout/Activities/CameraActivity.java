@@ -21,7 +21,7 @@ public class CameraActivity extends ActionBarActivity {
     private Context context;
     private Camera camera;
     private Camera.Parameters params;
-    private static final int IMAGE_CAPTURE = 102;
+    private static final int IMAGE_CAPTURE = 102; //request-code
     private Button buttonCamera;
 
     @Override
