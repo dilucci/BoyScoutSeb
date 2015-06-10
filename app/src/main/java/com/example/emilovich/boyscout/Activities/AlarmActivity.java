@@ -115,7 +115,7 @@ public class AlarmActivity extends ActionBarActivity {
         r.play();
         AlertDialog alert = new AlertDialog.Builder(this).create();
         alert.setTitle("Alarm!");
-        alert.setMessage("You now have 15 seconds to acknowledge the alarm!!");
+        alert.setMessage("You now have "  + acknowledgeTime + " seconds to acknowledge the alarm!!");
         alert.setButton("Acknowledge", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
